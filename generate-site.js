@@ -151,7 +151,7 @@ function shell(page, body, faqs) {
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="logo-link" href="/" aria-label="${brand} home">
-        <img src="/assets/tree-service-request-logo.png" width="440" height="110" alt="${brand} logo">
+        <img src="/assets/tree-service-request-logo.png" width="2172" height="724" alt="${brand} logo">
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
         <span></span><span></span><span></span>
@@ -175,7 +175,7 @@ function shell(page, body, faqs) {
   <footer class="site-footer">
     <div class="wrap footer-grid">
       <div>
-        <img class="footer-logo" src="/assets/tree-service-request-logo.png" width="300" height="75" alt="${brand} logo">
+        <img class="footer-logo" src="/assets/tree-service-request-logo.png" width="2172" height="724" alt="${brand} logo">
         <p>${brand} helps homeowners request connection with available local tree-service options. It does not remove, inspect, diagnose, trim, or grind trees.</p>
       </div>
       <div>
