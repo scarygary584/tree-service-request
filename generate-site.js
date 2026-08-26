@@ -17,6 +17,7 @@ const services = [
   ["/tree-near-house-or-power-line-hot-springs-ar/", "Tree Near House or Line"],
   ["/tree-removal-cost-hot-springs-ar/", "Cost Factors"],
   ["/tree-service-garland-county-ar/", "Garland County Requests"],
+  ["/hot-springs-storm-damaged-tree-safety-guide/", "Storm Tree Safety Guide"],
   ["/how-tree-service-requests-work/", "How Requests Work"],
 ];
 
@@ -33,6 +34,7 @@ const commonLinks = `
         <a href="/stump-grinding-hot-springs-ar/">Stump grinding request routing</a>
         <a href="/tree-removal-cost-hot-springs-ar/">Tree removal cost factors</a>
         <a href="/tree-service-garland-county-ar/">Garland County tree-service requests</a>
+        <a href="/hot-springs-storm-damaged-tree-safety-guide/">Hot Springs storm tree safety guide</a>
         <a href="/how-tree-service-requests-work/">How TreeServiceRequest.com works</a>
       </div>
     </div>
@@ -90,7 +92,14 @@ function jsonLd(page, faqs, crumbs) {
         "item": `${siteUrl}${crumb.url}`
       }))
     },
-    {
+    page.resource ? {
+      "@type": "Article",
+      "headline": page.h1,
+      "description": page.meta,
+      "mainEntityOfPage": `${siteUrl}${page.url}`,
+      "publisher": { "@id": `${siteUrl}/#organization` },
+      "image": `${siteUrl}/assets/hot-springs-storm-tree-safety-guide.svg`
+    } : {
       "@type": "Service",
       "name": page.serviceName || page.h1,
       "areaServed": "Hot Springs, Arkansas and nearby Garland County areas depending on provider availability",
@@ -134,12 +143,13 @@ function shell(page, body, faqs) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeHtml(page.title)}</title>
   <meta name="description" content="${escapeHtml(page.meta)}">
+${page.url === "/" ? '  <meta name="google-site-verification" content="OI2b4Rx7uarK4p_s8FEEyzESUR1qcpvzM_l1uSyEnZg" />' : ""}
   <link rel="canonical" href="${canonical}">
   <meta property="og:type" content="website">
   <meta property="og:title" content="${escapeHtml(page.ogTitle || page.title)}">
   <meta property="og:description" content="${escapeHtml(page.ogDescription || page.meta)}">
   <meta property="og:url" content="${canonical}">
-  <meta property="og:image" content="${siteUrl}/assets/og-tree-service-request.png">
+  <meta property="og:image" content="${page.ogImage || `${siteUrl}/assets/og-tree-service-request.png`}">
   <link rel="icon" href="/assets/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
@@ -165,6 +175,7 @@ function shell(page, body, faqs) {
         <a href="/tree-trimming-hot-springs-ar/">Tree Trimming</a>
         <a href="/stump-grinding-hot-springs-ar/">Stump Grinding</a>
         <a href="/tree-removal-cost-hot-springs-ar/">Cost Factors</a>
+        <a href="/hot-springs-storm-damaged-tree-safety-guide/">Safety Guide</a>
         <a href="/how-tree-service-requests-work/">How It Works</a>
         <a class="nav-call" href="${phoneHref}">Call ${phoneDisplay}</a>
       </nav>
@@ -185,6 +196,7 @@ function shell(page, body, faqs) {
         <a href="/fallen-tree-removal-hot-springs-ar/">Fallen tree removal</a>
         <a href="/storm-damage-tree-removal-hot-springs-ar/">Storm damage help</a>
         <a href="/tree-service-garland-county-ar/">Garland County requests</a>
+        <a href="/hot-springs-storm-damaged-tree-safety-guide/">Storm tree safety guide</a>
       </div>
       <div>
         <h2>Important</h2>
@@ -216,7 +228,7 @@ function hero(page, intro, buttons = true) {
         <p class="disclosure">Connector disclosure: ${brand} routes requests to independently operated providers when options may be available. It is not the company performing tree work.</p>
       </div>
       <div class="hero-side">
-        ${page.url === "/" ? `<figure class="hero-photo">
+${page.url === "/" ? `        <figure class="hero-photo">
           <img src="/assets/hero-tree-assessment.svg" width="1536" height="1024" alt="Tree-service professionals assessing a mature tree beside a Hot Springs area home" fetchpriority="high">
         </figure>` : ""}
         <div class="hero-card" aria-label="Tree-service request summary">
@@ -747,8 +759,94 @@ pages.push(longServicePage({
   ]
 }));
 
+const safetyGuideFaqs = [
+  { q: "Should I approach a tree touching a power line?", a: "No. Assume the line is energized, stay away from the tree and anything touching the line, and report it to the utility. Call 911 when there is immediate danger." },
+  { q: "Should I walk under a hanging branch to take a photo?", a: "No. Keep out of the possible fall area. Only document damage from a safe location." },
+  { q: "Who evaluates a split, leaning, or uprooted tree?", a: "A qualified tree professional should evaluate serious damage. TreeServiceRequest.com does not inspect or diagnose trees." },
+  { q: "What should I document for insurance or a provider?", a: "From a safe location, note the address, affected structures or access, visible damage, nearby lines, and wide-angle photos. Do not climb or move debris to get a better picture." },
+  { q: "Can I reuse the safety diagram?", a: "Yes, unmodified noncommercial reuse is permitted with visible attribution to TreeServiceRequest.com and a link to this guide." },
+  { q: "Does this guide replace emergency, utility, insurance, or professional advice?", a: "No. Follow emergency and utility instructions and obtain advice appropriate to the actual situation." }
+];
+
+pages.push({
+  url: "/hot-springs-storm-damaged-tree-safety-guide/",
+  file: path.join("hot-springs-storm-damaged-tree-safety-guide", "index.html"),
+  title: "Storm-Damaged Tree Safety Guide for Hot Springs, AR",
+  meta: "A practical Hot Springs homeowner guide for storm-damaged trees, hanging limbs, downed power lines, blocked access, documentation, and professional help.",
+  h1: "Hot Springs Storm-Damaged Tree Safety Guide",
+  nav: "Storm Tree Safety Guide",
+  resource: true,
+  ogImage: `${siteUrl}/assets/hot-springs-storm-tree-safety-guide.svg`,
+  faqs: safetyGuideFaqs,
+  body: () => `
+    ${hero({
+      url: "/hot-springs-storm-damaged-tree-safety-guide/",
+      h1: "Hot Springs Storm-Damaged Tree Safety Guide",
+      nav: "Storm Tree Safety Guide"
+    }, "Use this safety-first checklist after wind, ice, or storm damage. It separates immediate electrical and public-safety concerns from the information a homeowner can gather safely for insurance and a qualified tree professional.", false)}
+    <section class="section">
+      <div class="wrap guide-layout">
+        <div class="guide-main">
+          <div class="section-kicker">Original homeowner resource</div>
+          <h2>Start with danger—not cleanup</h2>
+          <p class="guide-intro">A damaged tree can involve suspended weight, hidden tension, unstable roots, roof damage, blocked access, and energized utility equipment. Do not begin cutting, climbing, pulling, or moving debris merely to inspect the situation.</p>
+          <figure class="safety-guide-figure">
+            <a href="/assets/hot-springs-storm-tree-safety-guide.svg" aria-label="Open the full-size Hot Springs storm-damaged tree safety guide">
+              <img src="/assets/hot-springs-storm-tree-safety-guide.svg" width="1200" height="1500" alt="Decision guide for Hot Springs homeowners after storm tree damage: stay away from power lines and unstable trees, report immediate hazards, document safely, and contact qualified help" loading="eager">
+            </a>
+            <figcaption>Original visual by TreeServiceRequest.com. Select the image to open the full-size guide.</figcaption>
+          </figure>
+          <div class="guide-actions">
+            <a class="button button-secondary" href="/assets/hot-springs-storm-tree-safety-guide.svg" download>Download the SVG guide</a>
+            <a class="button button-phone" href="${phoneHref}">Request tree-service connection</a>
+          </div>
+        </div>
+        <aside class="source-card" aria-label="Quick emergency references">
+          <h2>Quick references</h2>
+          <p><strong>Immediate danger:</strong> Call 911.</p>
+          <p><strong>Downed Entergy line:</strong> Stay away and report it at <a href="tel:+18009688243">1-800-968-8243</a>.</p>
+          <p><strong>Tree-service request:</strong> Call <a href="${phoneHref}">${phoneDisplay}</a>. Provider availability is not guaranteed.</p>
+          <p class="small-note">Never rely on a website alone during an emergency. Follow instructions from emergency responders and the utility.</p>
+        </aside>
+      </div>
+    </section>
+    <section class="section band">
+      <div class="wrap">
+        <div class="section-kicker">Five safe decisions</div>
+        <h2>What to do after storm tree damage</h2>
+        <div class="decision-grid">
+          <article><span>1</span><h3>Check for lines and immediate danger</h3><p>Assume every low or downed line is energized. Stay away from the line, the tree, water, fencing, vehicles, and anything else that may be touching it. Call 911 for immediate danger and report the line to Entergy.</p></article>
+          <article><span>2</span><h3>Keep people outside the fall area</h3><p>Do not stand beneath hanging branches, beside a split trunk, or downhill from an uprooted root plate. Keep children, pets, neighbors, and vehicles away when it can be done safely.</p></article>
+          <article><span>3</span><h3>Do not climb, cut, or pull</h3><p>Storm-damaged wood may be suspended or under tension. Do not climb the tree or roof, operate a chainsaw, attach a vehicle or rope, or move debris near utility equipment.</p></article>
+          <article><span>4</span><h3>Document from a safe location</h3><p>Record the address, affected structure or access, visible line involvement, and what changed. Take wide-angle photos only from outside the possible fall area. Contact the property insurer when appropriate.</p></article>
+          <article><span>5</span><h3>Use qualified help for serious damage</h3><p>The University of Arkansas Extension recommends involving a tree specialist when major branches, bracing, cabling, or serious damage are involved. Confirm qualifications, insurance, scope, cleanup, price, and timing directly.</p></article>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap content">
+        <div class="section-kicker">Verified references</div>
+        <h2>Sources and limits</h2>
+        <p>This guide is an original safety summary based on public guidance. It does not inspect a particular tree or replace instructions from emergency responders, utilities, insurers, public authorities, or qualified tree professionals.</p>
+        <ul class="resource-links">
+          <li><a href="https://www.entergy.com/stormcenter/what-do-if-you-spot-downed-power-line">Entergy: What to do if you spot a downed power line</a></li>
+          <li><a href="https://www.uaex.uada.edu/environment-nature/disaster/storm-damage.aspx">University of Arkansas Extension: How to recover from tree damage after a storm</a></li>
+          <li><a href="https://www.hotspringsar.gov/1747/Public-Safe-Rooms-in-Hot-Springs-Garland">City of Hot Springs: Public safe rooms in Hot Springs and Garland County</a></li>
+          <li><a href="https://www.weather.gov/lzk/">National Weather Service Little Rock forecast office</a></li>
+        </ul>
+        <div class="reuse-note">
+          <h2>Reuse and attribution</h2>
+          <p>Local newsrooms, neighborhood groups, property managers, real-estate professionals, educators, and community organizations may reuse the unmodified diagram for noncommercial public-safety information. Please credit “TreeServiceRequest.com — Hot Springs Storm-Damaged Tree Safety Guide” and link to this page. Do not remove emergency cautions or imply endorsement by the cited agencies.</p>
+        </div>
+        ${cta("Call to request tree-service connection")}
+      </div>
+    </section>
+    ${commonLinks}
+    ${faqMarkup(safetyGuideFaqs)}`
+});
+
 const css = `
-:root{--green:#14613c;--leaf:#55a85f;--charcoal:#25312d;--ink:#1f2a26;--muted:#65716c;--warm:#f7f4ed;--paper:#fffdf8;--line:#d8ded4;--alert:#b85032;--shadow:0 18px 45px rgba(24,49,38,.12)}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6}a{color:var(--green);text-decoration:none}a:hover{text-decoration:underline}img{max-width:100%;height:auto}.wrap{width:min(1120px,calc(100% - 40px));margin-inline:auto}.narrow{max-width:850px}.skip-link{position:absolute;left:16px;top:-80px;background:var(--charcoal);color:#fff;padding:10px 14px;border-radius:6px;z-index:20}.skip-link:focus{top:12px}.site-header{position:sticky;top:0;z-index:15;background:rgba(255,253,248,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.header-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:82px}.logo-link{display:flex;align-items:center}.logo-link img{width:198px;height:auto;display:block}.site-nav{display:flex;align-items:center;gap:16px;font-size:14px;font-weight:700}.site-nav a{color:var(--charcoal);white-space:nowrap}.nav-call{background:var(--green);color:#fff!important;padding:11px 14px;border-radius:6px}.nav-toggle{display:none;width:44px;height:44px;border:1px solid var(--line);background:#fff;border-radius:6px;align-items:center;justify-content:center;flex-direction:column;gap:5px}.nav-toggle span:not(.sr-only){display:block;width:20px;height:2px;background:var(--charcoal)}.sr-only{position:absolute;width:1px;height:1px;clip:rect(0 0 0 0);overflow:hidden;white-space:nowrap}.hero{background:linear-gradient(135deg,#f7f4ed 0%,#fffdf8 62%,#e8f2e4 100%);border-bottom:1px solid var(--line)}.hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) 380px;gap:44px;align-items:center;padding:72px 0}.breadcrumbs{font-size:13px;margin-bottom:24px;color:var(--muted)}.breadcrumbs a{color:var(--muted)}.eyebrow,.section-kicker{margin:0 0 10px;color:var(--green);font-weight:800;text-transform:uppercase;letter-spacing:0;font-size:13px}.hero h1{font-size:clamp(40px,6vw,72px);line-height:.96;letter-spacing:0;margin:0 0 22px;color:var(--charcoal);max-width:850px}.hero-lead{font-size:20px;max-width:760px;color:#3d4843;margin:0 0 26px}.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:20px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:13px 18px;border-radius:6px;font-weight:800;text-decoration:none}.button:hover{text-decoration:none}.button-phone{background:var(--green);color:#fff}.button-secondary{background:#fff;color:var(--green);border:1px solid var(--green)}.disclosure{font-size:14px;color:var(--muted);max-width:740px}.hero-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:26px;box-shadow:var(--shadow)}.leaf-mark{width:56px;height:56px;background:radial-gradient(circle at 40% 30%,#7fc36b 0 28%,#2f8c4f 29% 62%,#14613c 63%);border-radius:50% 50% 50% 12%;transform:rotate(-20deg);margin-bottom:18px}.hero-card h2{font-size:24px;line-height:1.1;margin:0 0 14px}.check-list,.dot-list{padding-left:20px;margin:0}.check-list li,.dot-list li{margin:8px 0}.section{padding:70px 0}.section h2{font-size:clamp(28px,4vw,44px);line-height:1.08;letter-spacing:0;color:var(--charcoal);margin:0 0 18px}.section h3{font-size:19px;line-height:1.25;margin:0 0 8px;color:var(--charcoal)}.band{background:var(--warm);border-block:1px solid var(--line)}.reason-grid,.service-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.reason-grid article,.service-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:18px;min-height:150px}.service-card{display:block;color:var(--ink);box-shadow:0 8px 22px rgba(24,49,38,.06)}.service-card span{display:block;color:var(--green);font-weight:900;font-size:18px;margin-bottom:8px}.split-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,420px);gap:34px;align-items:start}.safety-note{border-left:5px solid var(--alert);padding:14px 16px;background:#fff7f2;border-radius:0 6px 6px 0}.cta-panel{background:var(--charcoal);color:#fff;border-radius:8px;padding:28px;box-shadow:var(--shadow)}.cta-panel h2{color:#fff;font-size:28px}.cta-panel p{color:#e5ece7}.cta-panel .button-phone{background:var(--leaf);color:#10231a;margin-top:10px}.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;list-style:none;padding:0;margin:0;counter-reset:step}.steps li{background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px;counter-increment:step;min-height:190px}.steps li:before{content:counter(step);display:grid;place-items:center;width:36px;height:36px;background:var(--green);color:#fff;border-radius:50%;font-weight:900;margin-bottom:14px}.steps span{display:block;color:var(--muted);margin-top:8px}.content-columns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:30px}.content{max-width:860px}.content section{margin-bottom:34px}.content p{font-size:18px}.link-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.link-grid a{background:#fff;border:1px solid var(--line);border-radius:6px;padding:14px;font-weight:800}.faq-list{display:grid;gap:12px}.faq-item{background:#fff;border:1px solid var(--line);border-radius:8px;padding:0}.faq-item summary{cursor:pointer;font-weight:900;color:var(--charcoal);padding:18px 20px;list-style:none}.faq-item summary::-webkit-details-marker{display:none}.faq-item p{margin:0;padding:0 20px 18px;color:#46504b}.site-footer{background:var(--charcoal);color:#edf3ef;padding:54px 0 92px}.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:34px}.footer-logo{width:230px;background:#fff;border-radius:6px;padding:6px;margin-bottom:12px}.site-footer h2{font-size:18px;color:#fff}.site-footer a{display:block;color:#dcefe0;margin:8px 0}.footer-bottom{border-top:1px solid rgba(255,255,255,.16);margin-top:34px;padding-top:18px;color:#c7d5cc}.mobile-call{display:none;position:fixed;left:16px;right:16px;bottom:14px;z-index:18;background:var(--green);color:#fff;text-align:center;padding:14px 18px;border-radius:6px;font-weight:900;box-shadow:var(--shadow)}.mobile-call:hover{text-decoration:none}@media (max-width:980px){.nav-toggle{display:flex}.site-nav{position:absolute;left:20px;right:20px;top:76px;display:none;flex-direction:column;align-items:stretch;background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px;box-shadow:var(--shadow)}.site-nav.is-open{display:flex}.site-nav a{padding:10px}.hero-grid,.split-grid,.content-columns{grid-template-columns:1fr}.hero-grid{padding:48px 0}.hero-card{max-width:520px}.reason-grid,.service-grid,.steps,.link-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mobile-call{display:block}}@media (max-width:620px){.wrap{width:min(100% - 28px,1120px)}.logo-link img{width:154px}.header-inner{min-height:70px}.hero h1{font-size:40px}.hero-lead{font-size:18px}.section{padding:48px 0}.reason-grid,.service-grid,.steps,.link-grid{grid-template-columns:1fr}.button{width:100%}.footer-grid{grid-template-columns:1fr}.site-footer{padding-bottom:96px}}`;
+:root{--green:#14613c;--leaf:#55a85f;--charcoal:#25312d;--ink:#1f2a26;--muted:#65716c;--warm:#f7f4ed;--paper:#fffdf8;--line:#d8ded4;--alert:#b85032;--shadow:0 18px 45px rgba(24,49,38,.12)}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6}a{color:var(--green);text-decoration:none}a:hover{text-decoration:underline}img{max-width:100%;height:auto}.wrap{width:min(1120px,calc(100% - 40px));margin-inline:auto}.narrow{max-width:850px}.skip-link{position:absolute;left:16px;top:-80px;background:var(--charcoal);color:#fff;padding:10px 14px;border-radius:6px;z-index:20}.skip-link:focus{top:12px}.site-header{position:sticky;top:0;z-index:15;background:rgba(255,253,248,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.header-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:98px;padding-block:6px}.logo-link{display:flex;align-items:center;flex:0 0 auto;max-width:360px}.logo-link img{width:340px;max-width:100%;height:auto;object-fit:contain;display:block;flex-shrink:0}.site-nav{display:flex;align-items:center;justify-content:flex-end;flex:1 1 auto;flex-wrap:wrap;gap:12px 16px;font-size:14px;font-weight:700}.site-nav a{color:var(--charcoal);white-space:nowrap}.nav-call{background:var(--green);color:#fff!important;padding:11px 14px;border-radius:6px}.nav-toggle{display:none;width:44px;height:44px;border:1px solid var(--line);background:#fff;border-radius:6px;align-items:center;justify-content:center;flex-direction:column;gap:5px}.nav-toggle span:not(.sr-only){display:block;width:20px;height:2px;background:var(--charcoal)}.sr-only{position:absolute;width:1px;height:1px;clip:rect(0 0 0 0);overflow:hidden;white-space:nowrap}.hero{background:linear-gradient(135deg,#f7f4ed 0%,#fffdf8 62%,#e8f2e4 100%);border-bottom:1px solid var(--line)}.hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) 380px;gap:44px;align-items:center;padding:72px 0}.breadcrumbs{font-size:13px;margin-bottom:24px;color:var(--muted)}.breadcrumbs a{color:var(--muted)}.eyebrow,.section-kicker{margin:0 0 10px;color:var(--green);font-weight:800;text-transform:uppercase;letter-spacing:0;font-size:13px}.hero h1{font-size:clamp(40px,6vw,72px);line-height:.96;letter-spacing:0;margin:0 0 22px;color:var(--charcoal);max-width:850px}.hero-lead{font-size:20px;max-width:760px;color:#3d4843;margin:0 0 26px}.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:20px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:13px 18px;border-radius:6px;font-weight:800;text-decoration:none}.button:hover{text-decoration:none}.button-phone{background:var(--green);color:#fff}.button-secondary{background:#fff;color:var(--green);border:1px solid var(--green)}.disclosure{font-size:14px;color:var(--muted);max-width:740px}.hero-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:26px;box-shadow:var(--shadow)}.leaf-mark{width:56px;height:56px;background:radial-gradient(circle at 40% 30%,#7fc36b 0 28%,#2f8c4f 29% 62%,#14613c 63%);border-radius:50% 50% 50% 12%;transform:rotate(-20deg);margin-bottom:18px}.hero-card h2{font-size:24px;line-height:1.1;margin:0 0 14px}.check-list,.dot-list{padding-left:20px;margin:0}.check-list li,.dot-list li{margin:8px 0}.section{padding:70px 0}.section h2{font-size:clamp(28px,4vw,44px);line-height:1.08;letter-spacing:0;color:var(--charcoal);margin:0 0 18px}.section h3{font-size:19px;line-height:1.25;margin:0 0 8px;color:var(--charcoal)}.band{background:var(--warm);border-block:1px solid var(--line)}.reason-grid,.service-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.reason-grid article,.service-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:18px;min-height:150px}.service-card{display:block;color:var(--ink);box-shadow:0 8px 22px rgba(24,49,38,.06)}.service-card span{display:block;color:var(--green);font-weight:900;font-size:18px;margin-bottom:8px}.split-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,420px);gap:34px;align-items:start}.safety-note{border-left:5px solid var(--alert);padding:14px 16px;background:#fff7f2;border-radius:0 6px 6px 0}.cta-panel{background:var(--charcoal);color:#fff;border-radius:8px;padding:28px;box-shadow:var(--shadow)}.cta-panel h2{color:#fff;font-size:28px}.cta-panel p{color:#e5ece7}.cta-panel .button-phone{background:var(--leaf);color:#10231a;margin-top:10px}.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;list-style:none;padding:0;margin:0;counter-reset:step}.steps li{background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px;counter-increment:step;min-height:190px}.steps li:before{content:counter(step);display:grid;place-items:center;width:36px;height:36px;background:var(--green);color:#fff;border-radius:50%;font-weight:900;margin-bottom:14px}.steps span{display:block;color:var(--muted);margin-top:8px}.content-columns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:30px}.content{max-width:860px}.content section{margin-bottom:34px}.content p{font-size:18px}.link-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.link-grid a{background:#fff;border:1px solid var(--line);border-radius:6px;padding:14px;font-weight:800}.faq-list{display:grid;gap:12px}.faq-item{background:#fff;border:1px solid var(--line);border-radius:8px;padding:0}.faq-item summary{cursor:pointer;font-weight:900;color:var(--charcoal);padding:18px 20px;list-style:none}.faq-item summary::-webkit-details-marker{display:none}.faq-item p{margin:0;padding:0 20px 18px;color:#46504b}.site-footer{background:var(--charcoal);color:#edf3ef;padding:54px 0 92px}.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:34px}.footer-logo{width:300px;max-width:100%;height:auto;object-fit:contain;background:#fff;border-radius:6px;padding:6px;margin-bottom:12px}.site-footer h2{font-size:18px;color:#fff}.site-footer a{display:block;color:#dcefe0;margin:8px 0}.footer-bottom{border-top:1px solid rgba(255,255,255,.16);margin-top:34px;padding-top:18px;color:#c7d5cc}.mobile-call{display:none;position:fixed;left:16px;right:16px;bottom:14px;z-index:18;background:var(--green);color:#fff;text-align:center;padding:14px 18px;border-radius:6px;font-weight:900;box-shadow:var(--shadow)}.mobile-call:hover{text-decoration:none}@media (max-width:1120px){.nav-toggle{display:flex}.site-nav{position:absolute;left:20px;right:20px;top:82px;display:none;flex-direction:column;align-items:stretch;background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px;box-shadow:var(--shadow)}.site-nav.is-open{display:flex}.site-nav a{padding:10px}.hero-grid,.split-grid,.content-columns{grid-template-columns:1fr}.hero-grid{padding:48px 0}.hero-card{max-width:520px}.reason-grid,.service-grid,.steps,.link-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mobile-call{display:block}}@media (max-width:620px){.wrap{width:min(100% - 28px,1120px)}.logo-link{max-width:260px}.logo-link img{width:240px}.header-inner{min-height:84px;padding-block:4px}.hero h1{font-size:40px}.hero-lead{font-size:18px}.section{padding:48px 0}.reason-grid,.service-grid,.steps,.link-grid{grid-template-columns:1fr}.button{width:100%}.footer-grid{grid-template-columns:1fr}.site-footer{padding-bottom:96px}}`;
 
 const photoCss = `
 .hero-side {
@@ -792,10 +890,124 @@ const photoCss = `
   font-size: 14px;
 }
 
+.guide-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 34px;
+  align-items: start;
+}
+
+.guide-intro {
+  max-width: 820px;
+  font-size: 18px;
+}
+
+.safety-guide-figure {
+  margin: 28px 0 16px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.safety-guide-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.safety-guide-figure figcaption {
+  padding: 12px 16px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.guide-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.source-card,
+.reuse-note {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  padding: 24px;
+}
+
+.source-card {
+  position: sticky;
+  top: 118px;
+  box-shadow: var(--shadow);
+}
+
+.source-card h2,
+.reuse-note h2 {
+  font-size: 24px;
+}
+
+.small-note {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.decision-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.decision-grid article {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  padding: 18px;
+}
+
+.decision-grid article > span {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 14px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #fff;
+  font-weight: 900;
+}
+
+.resource-links {
+  padding-left: 22px;
+}
+
+.resource-links li {
+  margin: 10px 0;
+}
+
+.reuse-note {
+  margin: 28px 0;
+  background: var(--warm);
+}
+
 @media (max-width: 1120px) {
   .hero-side,
   .hero-card {
     max-width: 620px;
+  }
+
+  .guide-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .source-card {
+    position: static;
+    max-width: 620px;
+  }
+
+  .decision-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -806,6 +1018,10 @@ const photoCss = `
 
   .mid-page-photo img {
     height: 260px;
+  }
+
+  .decision-grid {
+    grid-template-columns: 1fr;
   }
 }
 `;
