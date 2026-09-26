@@ -98,7 +98,7 @@ function jsonLd(page, faqs, crumbs) {
       "description": page.meta,
       "mainEntityOfPage": `${siteUrl}${page.url}`,
       "publisher": { "@id": `${siteUrl}/#organization` },
-      "image": `${siteUrl}/assets/hot-springs-storm-tree-safety-guide.svg`
+      ...(page.resourceImage === false ? {} : { "image": `${siteUrl}/assets/hot-springs-storm-tree-safety-guide.svg` })
     } : {
       "@type": "Service",
       "name": page.serviceName || page.h1,
@@ -347,6 +347,8 @@ function longServicePage(opts) {
     h1: opts.h1,
     nav: opts.nav,
     serviceName: opts.serviceName,
+    resource: opts.resource,
+    resourceImage: opts.resourceImage,
     faqs: opts.faqs,
     body: () => `
       ${hero(opts, opts.intro, opts.buttons !== false)}
@@ -642,14 +644,14 @@ pages.push(longServicePage({
     { h: "Location, access, and nearby structures", p: [
       "Mention roofs, garages, sheds, fences, retaining walls, driveways, and utility lines near the tree. Limited space may affect how sections of the tree can be handled and where equipment can operate.",
       "On a sloped Hot Springs lot or a property with a narrow driveway, tell the provider about gates, steps, parking space, soft ground, and the distance from the street. Ask whether a site visit is needed to assess access and property protection.",
-      "Equipment needs vary by job. Ask whether any lift, crane, loader, or other equipment is included in the quote and whether access restrictions could change the plan. Do not move debris or enter areas near downed lines to make access."
+      "Equipment needs vary by job. Ask whether any lift, crane, loader, or other equipment is included in the quote and whether access restrictions could change the plan. Use the <a href=\"/tree-removal-property-access-hot-springs-ar/\">property-access planning guide</a> to prepare details about gates, routes, and areas to protect. Do not move debris or enter areas near downed lines to make access."
     ] },
     { h: "Debris hauling, wood, and stump work", p: [
       "Agree on what happens to branches, logs, and chips before work begins. Full hauling, leaving cut wood onsite, and leaving larger trunk sections are different scopes. If you want wood retained, specify where it should be placed and what handling is included.",
       "Removing a tree does not automatically include grinding its stump. Ask whether stump grinding, chip removal, filling the resulting area, and any lawn restoration are included, optional, or excluded."
     ] },
     { h: "Checklist for comparing tree-removal quotes", p: [
-      "Use the same list with each company so you can compare the total for equivalent work. Ask for unclear items to be written into the quote before accepting it."
+      "Use the same list with each company so you can compare the total for equivalent work. Ask for unclear items to be written into the quote before accepting it. For a worked example and questions about exclusions, read <a href=\"/tree-removal-quote-checklist-hot-springs-ar/\">how to compare tree-removal quotes</a>."
     ], list: [
       "<strong>Trees and work:</strong> Which trees are included, and is each being removed or trimmed?",
       "<strong>Equipment and access:</strong> What equipment, access arrangements, and property-protection measures are included?",
@@ -673,6 +675,171 @@ pages.push(longServicePage({
     { q: "Is stump grinding included?", a: "Not automatically. Stump grinding is often a separate possible service and should be confirmed directly." },
     { q: "Can permits affect the job?", a: "Permits or local rules may apply in some circumstances. Ask the provider and local authorities where appropriate." },
     { q: "Does utility involvement affect cost?", a: "It can affect scope, timing, and whether the provider can perform the work without utility coordination." }
+  ]
+}));
+
+pages.push(longServicePage({
+  "url": "/tree-removal-quote-checklist-hot-springs-ar/",
+  "title": "How to Compare Tree Removal Quotes in Hot Springs, AR",
+  "meta": "Compare tree removal quotes in Hot Springs, AR: tree identification, hauling, stump work, cleanup, payment terms, and changes to the agreed scope.",
+  "h1": "How to Compare Tree Removal Quotes in Hot Springs, AR",
+  "nav": "Quote Checklist",
+  "resource": true,
+  "resourceImage": false,
+  "buttons": false,
+  "relatedHtml": "",
+  "intro": "Before choosing a company for <a href=\"/tree-removal-hot-springs-ar/\">tree removal in Hot Springs</a>, check what each quote actually includes. Use the same project description with every company, then compare removal, hauling, stump work, and cleanup separately.",
+  "sections": [
+    {
+      "h": "Start with the same project description",
+      "p": [
+        "Two totals are only useful to compare when they describe the same job. Identify each tree by its location, such as the oak beside the driveway or the pine behind the garage. If several trees are involved, ask the company to identify each one in the written scope.",
+        "Explain whether you want the entire tree removed, branches trimmed, or an evaluation before deciding. Note what you want left behind: a stump, cut wood, or nothing but the agreed cleanup. Let the company assess the tree and choose an appropriate working method."
+      ]
+    },
+    {
+      "h": "Ask what the total covers",
+      "p": [
+        "Ask each company to put inclusions, exclusions, and optional work in writing. Use these questions during the estimate discussion:"
+      ],
+      "list": [
+        "<strong>Removal:</strong> Which trees and which work are included? Is the remaining stump height described?",
+        "<strong>Branches and logs:</strong> Will they be hauled away, chipped onsite, stacked, or left where they fall?",
+        "<strong>Retained wood:</strong> If you want firewood, are cutting and placement included? What lengths and location are agreed?",
+        "<strong>Stump work:</strong> Is grinding included or separately priced? What happens to chips and the resulting area?",
+        "<strong>Equipment:</strong> Does the total include the equipment and any access arrangements the company expects to need?",
+        "<strong>Cleanup:</strong> Does the work include raking small debris, clearing the driveway, or removing sawdust? What restoration is excluded?",
+        "<strong>Requirements:</strong> Who confirms applicable permissions, permits, or utility coordination and any associated costs?",
+        "<strong>Payment:</strong> What is due, when is it due, and what written approval is needed for additional work?"
+      ]
+    },
+    {
+      "h": "A simple comparison example",
+      "p": [
+        "Suppose one quote includes taking down a tree and leaving all logs onsite. Another includes hauling the wood and grinding the stump. The second quote covers more work; its higher total alone does not show whether it is better or worse value.",
+        "Ask for both quotes to be revised to the cleanup and stump scope you actually want. If you are considering optional work, ask for it to be listed separately so you can decide without guessing what the base price includes.",
+        "For the reasons jobs can differ in labor and equipment needs, read the <a href=\"/tree-removal-cost-hot-springs-ar/\">tree-removal cost factors guide</a>."
+      ]
+    },
+    {
+      "h": "Confirm access and property protection",
+      "p": [
+        "Ask where equipment is expected to travel and where branches or logs will be handled. Discuss fences, gates, parking, planted beds, driveways, and any known underground features before accepting the plan.",
+        "Use the <a href=\"/tree-removal-property-access-hot-springs-ar/\">property-access planning guide</a> to prepare these details. Ask what protection the company proposes and how any damage concerns will be documented and addressed. Do not assume that cleanup includes repairing lawn ruts or replacing landscaping."
+      ]
+    },
+    {
+      "h": "Clarify timing and changes before accepting",
+      "p": [
+        "Ask whether the proposed date is firm or dependent on weather, site conditions, equipment, or other jobs. If timing matters because access is blocked, explain that clearly and ask what the company can actually commit to.",
+        "Keep a copy of the quote and agreed scope. If the job changes after an assessment, ask for the revised scope and price before authorizing additional work. Confirm qualifications and insurance directly with the company; a short or inexpensive quote is not proof of either."
+      ]
+    },
+    {
+      "h": "Have these details ready when you call",
+      "p": [
+        "Prepare the property address, a description of each tree, the reason for the request, known access restrictions, and your preference for hauling and stump work. Photos may help if you can take them from a safe location.",
+        "TreeServiceRequest.com takes requests and does not issue quotes or promise appointments. The independent provider determines whether an onsite evaluation is needed and confirms its own price and availability."
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Should I choose the lowest tree-removal quote?",
+      "a": "Compare the same scope first. A lower total may exclude hauling, stump work, or cleanup. Consider the written terms, qualifications, insurance, and proposed work as well as the price."
+    },
+    {
+      "q": "Can I compare quotes without an onsite visit?",
+      "a": "Ask each company whether photos and your description are enough for its quote or whether an onsite evaluation is required. Make sure any assumptions or conditions are stated."
+    },
+    {
+      "q": "Does tree removal include stump grinding?",
+      "a": "Do not assume so. Ask for stump grinding and the handling of chips and the resulting area to be specifically included or listed as optional."
+    }
+  ]
+}));
+
+pages.push(longServicePage({
+  "url": "/tree-removal-property-access-hot-springs-ar/",
+  "title": "Planning Property Access for Tree Removal in Hot Springs, AR",
+  "meta": "Prepare access details for tree removal in Hot Springs, AR: gates, slopes, driveways, parking, nearby structures, equipment routes, and cleanup.",
+  "h1": "Planning Property Access for Tree Removal in Hot Springs, AR",
+  "nav": "Property Access",
+  "resource": true,
+  "resourceImage": false,
+  "buttons": false,
+  "relatedHtml": "",
+  "intro": "When arranging <a href=\"/tree-removal-hot-springs-ar/\">tree removal in Hot Springs</a>, describe how a crew could reach the tree as well as the tree itself. Gates, slopes, driveways, and nearby structures give the company information it needs to evaluate the job.",
+  "sections": [
+    {
+      "h": "Describe the route from the street to the tree",
+      "p": [
+        "Start with the driveway or other existing entrance, then describe the route to the tree. Mention whether it is in a front yard, behind a fence, below a slope, or beyond a narrow side yard. On a lake-area property, explain whether access is from the road or through a longer yard route.",
+        "A street-facing photo and a wide view from a safe location may help explain the layout. You do not need to walk beneath damaged limbs, approach a leaning tree, or enter an unsafe area to prepare a request."
+      ]
+    },
+    {
+      "h": "Gates, turns, steps, and overhead clearance",
+      "p": [
+        "Tell the company about narrow gates, tight corners, steps, retaining walls, low roof edges, and overhead lines along the route. A gate opening alone does not establish whether a machine can reach the work area.",
+        "There is no single gate width that fits every tree-removal job. Different equipment needs different clearance and turning space. If the company asks for measurements, provide them only where safe and let it confirm whether its equipment and method are suitable.",
+        "Do not remove fence panels or alter an entrance before the company has explained what access it needs and who will restore anything moved."
+      ]
+    },
+    {
+      "h": "Slopes, ground conditions, and features to protect",
+      "p": [
+        "Describe steep areas, recent rain, soft spots, drainage channels, and surfaces that could be affected by equipment. Ask the company to evaluate the route rather than deciding yourself that a yard or driveway can support a vehicle.",
+        "Mention known irrigation, septic components, buried utilities, paving, landscape beds, and other features near the proposed route. Give the company any relevant existing property information and ask how it will confirm what needs protecting.",
+        "Access is one part of the scope discussed in our <a href=\"/tree-removal-cost-hot-springs-ar/\">tree-removal cost factors guide</a>. Restricted access does not by itself establish a price or prove that a crane is necessary."
+      ]
+    },
+    {
+      "h": "Parking, loading, and access permissions",
+      "p": [
+        "Ask where vehicles will park and where logs, branches, or chips will be loaded or stored. Explain if the driveway serves more than one household or must remain available for essential access.",
+        "If a proposed route uses a neighbor’s land, a shared entrance, or public space, ask the company what permissions or arrangements are needed. Do not assume that a contractor can use an adjoining property because it offers the shortest route.",
+        "Agree on who handles any gate or fence changes and who puts them back. Keep the plan specific enough that everyone understands where access is allowed."
+      ]
+    },
+    {
+      "h": "Questions to settle before the work date",
+      "p": [
+        "Use this checklist when the company reviews your property:"
+      ],
+      "list": [
+        "Which entrance and route will the crew use?",
+        "What parking or loading space needs to be available?",
+        "Which areas should the crew avoid, and how will those be identified?",
+        "What protection is proposed for paving, lawns, and nearby landscaping?",
+        "Does anything need to be moved, and who is responsible?",
+        "Where will retained wood, chips, or other material be placed?",
+        "What happens if weather or ground conditions make the planned route unsuitable?",
+        "What cleanup and restoration are included?"
+      ]
+    },
+    {
+      "h": "Prepare only after the company confirms its plan",
+      "p": [
+        "Once the company gives you instructions, arrange safe parking and keep people and pets away from the work area. Move ordinary items only when it is safe and the company has identified what should be cleared. Leave hazardous branches, unstable trees, and utility-related obstructions to the appropriate professionals.",
+        "Put access arrangements and restoration expectations into the written scope. The <a href=\"/tree-removal-quote-checklist-hot-springs-ar/\">tree-removal quote checklist</a> explains how to compare those items alongside hauling and stump work.",
+        "TreeServiceRequest.com takes your request. The independent company evaluates access, chooses equipment, and confirms scheduling and pricing."
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "q": "How wide must a gate be for tree-removal equipment?",
+      "a": "There is no universal width. Tell the company about the opening, turns, slope, and other restrictions, and ask it to confirm clearance for the equipment it plans to use."
+    },
+    {
+      "q": "Does a narrow backyard mean a crane is required?",
+      "a": "Not necessarily. The company must evaluate the tree, surroundings, access, and available working methods before deciding what equipment is appropriate."
+    },
+    {
+      "q": "Should I take down a fence before the crew arrives?",
+      "a": "Wait for an agreed access plan. Confirm whether a fence change is necessary, who is authorized to do it, and who will restore it."
+    }
   ]
 }));
 
