@@ -125,9 +125,8 @@ function cta(label = "Call now to describe the tree concern") {
   return `
     <div class="cta-panel">
       <div>
-        <p class="eyebrow">Request routing</p>
-        <h2>Call ${phoneDisplay} to request connection with available local tree-service options.</h2>
-        <p>${brand} is not a tree-service provider. Service availability, timing, scope, qualifications, insurance, and pricing must be confirmed directly with the independent provider.</p>
+        <h2>Need help with tree removal?</h2>
+        <p>Tell us where the property is and what needs attention. We take your request; an independent provider confirms availability and pricing.</p>
       </div>
       <a class="button button-phone" href="${phoneHref}" aria-label="${label}">Call ${phoneDisplay}</a>
     </div>`;
