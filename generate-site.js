@@ -350,18 +350,19 @@ function longServicePage(opts) {
     serviceName: opts.serviceName,
     faqs: opts.faqs,
     body: () => `
-      ${hero(opts, opts.intro)}
+      ${hero(opts, opts.intro, opts.buttons !== false)}
       <section class="section">
         <div class="wrap content">
           ${opts.sections.map((section) => `
             <section>
               <h2>${section.h}</h2>
               ${section.p.map((para) => `<p>${para}</p>`).join("")}
+              ${section.list ? `<ul class="check-list">${section.list.map(item => `<li>${item}</li>`).join("")}</ul>` : ""}
             </section>`).join("")}
-          ${cta()}
+          ${opts.ctaHtml || cta()}
         </div>
       </section>
-      ${commonLinks}
+      ${opts.relatedHtml === undefined ? commonLinks : opts.relatedHtml}
       ${faqMarkup(opts.faqs)}`
   };
 }
@@ -622,27 +623,47 @@ pages.push(longServicePage({
 pages.push(longServicePage({
   url: "/tree-removal-cost-hot-springs-ar/",
   title: "Tree Removal Cost Factors in Hot Springs, AR",
-  meta: "Learn tree removal cost factors in Hot Springs, AR without made-up prices. Size, access, equipment, cleanup, stumps, permits, and timing.",
+  meta: "Understand tree removal cost factors in Hot Springs, AR. Compare quotes for access, equipment, debris hauling, stump work, and cleanup.",
   h1: "Tree Removal Cost Factors in Hot Springs, AR",
   nav: "Cost Factors",
   serviceName: "Tree removal cost factor information",
-  intro: "Pricing varies widely and must be confirmed directly with the independent provider. This page explains common factors that may affect tree removal cost discussions.",
+  buttons: false,
+  relatedHtml: "",
+  ctaHtml: `<div class="cta-panel"><div><p class="eyebrow">Describe your project</p><h2>Have a tree-removal request?</h2><p>Have your Hot Springs address, the number of trees, access details, and cleanup preferences ready when you call. Availability and quotes depend on the independent provider.</p></div><a class="button button-phone" href="${phoneHref}">Call ${phoneDisplay}</a></div>`,
+  intro: 'The cost of <a href="/tree-removal-hot-springs-ar/">tree removal in Hot Springs</a> depends on the tree, the space around it, and what the job includes. Use this guide to prepare your questions and compare quotes for the same work.',
   sections: [
-    { h: "Why this page does not publish local prices", p: [
-      "Tree removal cost in Hot Springs can vary too much to responsibly list made-up prices. A small, accessible tree is a different job from a tall tree near a roof, a leaning trunk near a driveway, or a storm-damaged tree that may require special equipment.",
-      "TreeServiceRequest.com does not set prices, guarantee estimates, or decide scope. Independent providers determine pricing after discussing the details directly with the homeowner."
+    { h: "What affects your tree-removal quote?", p: [
+      "A small tree in an open yard presents a different job from a tall tree beside a roof or a storm-damaged trunk over a driveway. Height alone does not describe the work: access, condition, nearby structures, equipment, and debris handling also matter.",
+      "Ask for a written scope with the price. A lower total may exclude hauling or stump work that another quote includes. TreeServiceRequest.com does not set prices or provide estimates; the company evaluating your project confirms the quote."
     ] },
     { h: "Tree size, height, and condition", p: [
-      "Size, height, trunk diameter, canopy spread, wood weight, and condition can all influence the work. A dead, split, leaning, uprooted, or storm-damaged tree may require a different approach than a healthy standing tree in an open area.",
-      "The provider may ask what you can safely see from the ground. Do not climb or cut to gather information."
+      "Describe how many trees you want evaluated and where each one stands. Height, trunk diameter, canopy spread, and the amount of wood to handle can affect labor and equipment needs.",
+      "A dead, split, leaning, uprooted, or storm-damaged tree may require a different approach from a sound tree in an open area. Describe visible changes from a safe location and let a qualified professional assess the condition. Do not climb, cut, or approach unstable trees to gather measurements."
     ] },
     { h: "Location, access, and nearby structures", p: [
-      "Trees near homes, garages, sheds, fences, vehicles, driveways, retaining walls, or utility lines can affect planning. So can steep slopes, narrow gates, lake-area access, soft ground, limited parking, and distance from the street.",
-      "Equipment needs can vary. A provider may consider ropes, lifts, loaders, cranes, traffic control, or other resources depending on the job. Crane use, if needed, can materially change scope and scheduling."
+      "Mention roofs, garages, sheds, fences, retaining walls, driveways, and utility lines near the tree. Limited space may affect how sections of the tree can be handled and where equipment can operate.",
+      "On a sloped Hot Springs lot or a property with a narrow driveway, tell the provider about gates, steps, parking space, soft ground, and the distance from the street. Ask whether a site visit is needed to assess access and property protection.",
+      "Equipment needs vary by job. Ask whether any lift, crane, loader, or other equipment is included in the quote and whether access restrictions could change the plan. Do not move debris or enter areas near downed lines to make access."
     ] },
-    { h: "Cleanup, hauling, stumps, timing, and requirements", p: [
-      "Debris handling, hauling, wood placement, stump grinding, emergency scheduling, permit considerations, and utility involvement can all affect the final discussion. Some homeowners want full cleanup; others may want wood left onsite.",
-      "Ask the provider what is included, what is optional, and whether permits or local requirements may apply. Confirm qualifications, insurance, scope, price, and timing before hiring."
+    { h: "Debris hauling, wood, and stump work", p: [
+      "Agree on what happens to branches, logs, and chips before work begins. Full hauling, leaving cut wood onsite, and leaving larger trunk sections are different scopes. If you want wood retained, specify where it should be placed and what handling is included.",
+      "Removing a tree does not automatically include grinding its stump. Ask whether stump grinding, chip removal, filling the resulting area, and any lawn restoration are included, optional, or excluded."
+    ] },
+    { h: "Checklist for comparing tree-removal quotes", p: [
+      "Use the same list with each company so you can compare the total for equivalent work. Ask for unclear items to be written into the quote before accepting it."
+    ], list: [
+      "<strong>Trees and work:</strong> Which trees are included, and is each being removed or trimmed?",
+      "<strong>Equipment and access:</strong> What equipment, access arrangements, and property-protection measures are included?",
+      "<strong>Hauling:</strong> Will branches, logs, and chips be removed, or will some material remain?",
+      "<strong>Stumps:</strong> Is stump work included, and what happens to the chips and area afterward?",
+      "<strong>Cleanup:</strong> What condition will the yard, driveway, and work area be left in?",
+      "<strong>Requirements:</strong> Who checks applicable permits, utility coordination, or access permissions, and who pays any associated charges?",
+      "<strong>Timing:</strong> What schedule is proposed, and are urgent or after-hours charges included?",
+      "<strong>Payment and changes:</strong> What is the total, when is payment due, and how will additional work be approved?"
+    ] },
+    { h: "Timing and preparing for a quote", p: [
+      "Explain whether you are planning routine removal or reporting new storm damage. Urgent scheduling, when available, may affect the quote. Confirm timing directly rather than assuming that a request means a crew has been booked.",
+      "Have the property address, number of trees, access details, and desired cleanup ready. Photos taken from a safe location may help explain the request, but ask the company whether it needs an onsite evaluation before quoting. Check qualifications and insurance before hiring."
     ] }
   ],
   faqs: [
